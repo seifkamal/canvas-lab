@@ -1,0 +1,91 @@
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  :root {
+    height: 100%;
+  }
+
+  body {
+    height: 100%;
+  }
+
+  menu,
+  ul,
+  ol {
+    list-style-type: none;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+:root {
+  --c-bg: ghostwhite;
+  --c-fg: black;
+
+  font-family: monospace;
+  font-size: large;
+  background-color: var(--c-bg);
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+menu {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  border-radius: 8px;
+  padding: 0.5rem;
+  color: var(--c-bg);
+  background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
+}
+
+menu:empty {
+  display: none;
+}
+
+nav {
+  position: fixed;
+  top: 1rem;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: min(30ch, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+nav button {
+  all: unset;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.5rem;
+  width: fit-content;
+  border-radius: 8px;
+  padding: 0.5rem;
+  color: var(--c-bg);
+  background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
+}
+
+nav ul {
+  display: none;
+}
+
+nav:has(button[aria-pressed]) ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
