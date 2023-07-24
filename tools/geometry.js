@@ -40,19 +40,19 @@ export class Vec {
   get mag() {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
-  static zero() {
+  static get zero() {
     return new Vec(0, 0);
   }
-  static up() {
+  static get up() {
     return new Vec(0, -1);
   }
-  static down() {
+  static get down() {
     return new Vec(0, 1);
   }
-  static left() {
+  static get left() {
     return new Vec(-1, 0);
   }
-  static right() {
+  static get right() {
     return new Vec(1, 0);
   }
   /**

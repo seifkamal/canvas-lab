@@ -67,7 +67,7 @@ export default function experiment(canvas, param) {
     if (walker.drinks === 25) {
       canvas.ctx.font = "24px sans-serif";
       canvas.ctx.fillStyle = "red";
-      canvas.write("✘", walker.pos);
+      canvas.mark(walker.pos);
       end();
       return;
     }

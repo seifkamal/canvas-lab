@@ -1,5 +1,10 @@
 import { Rect, Vec } from "../tools/geometry.js";
 
+const Chars = {
+  x: "✘",
+  o: "○",
+};
+
 /**
  * @param {HTMLCanvasElement} canvas
  * @returns A wrapper object around the given canvas that exposes convenience
@@ -48,6 +53,19 @@ export function canvas2D(canvas) {
     },
     /**
      * @param {Vec} point
+     * @param {'x' | 'o'} type
+     */
+    mark(point, type = "x") {
+      this.write(Chars[type], point);
+    },
+    /**
+     * @param {Vec} to
+     */
+    move(to) {
+      this.ctx.moveTo(to.x, to.y);
+    },
+    /**
+     * @param {Vec} point
      */
     plot(point) {
       this.ctx.lineTo(point.x, point.y);
@@ -56,7 +74,7 @@ export function canvas2D(canvas) {
     /**
      * @param {Vec[]} points
      */
-    path(points) {
+    path(...points) {
       this.ctx.beginPath();
       points.forEach((point, idx) => {
         if (idx === 0) {
@@ -65,8 +83,8 @@ export function canvas2D(canvas) {
         }
         this.ctx.lineTo(point.x, point.y);
       });
-      this.ctx.closePath();
       this.ctx.stroke();
+      this.ctx.closePath();
     },
     /**
      * @param {Rect} rect

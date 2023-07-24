@@ -1,6 +1,12 @@
 /**
- * @typedef {(delta: number) => void} StepFunc
- * @typedef {{ end(): void, pause(): void, unpause(): void }} LoopControls
+ * @typedef {{ delta: number; count: number; }} StepInfo
+ * @typedef {(info: StepInfo) => void} StepFunc
+ * @typedef {{
+ *   end(): void;
+ *   pause(): void;
+ *   unpause(): void;
+ * }} LoopControls
+ *
  * @param {StepFunc} onStep
  * @returns {LoopControls}
  */
@@ -9,9 +15,10 @@ export function loop(onStep) {
     throw new Error("onStep must be a function");
   }
 
-  let ended = false;
-  let paused = false;
+  let count = 0;
   let lastFrame = 0;
+  let paused = false;
+  let ended = false;
   const step = (elapsed = 0) => {
     if (ended) {
       return;
@@ -21,7 +28,8 @@ export function loop(onStep) {
     const delta = seconds - lastFrame;
 
     if (!paused) {
-      onStep(delta);
+      onStep({ delta, count });
+      count++;
     }
 
     lastFrame = seconds;

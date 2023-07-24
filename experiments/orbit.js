@@ -21,7 +21,7 @@ export default function experiment(canvas, param) {
     value: String(F),
   });
 
-  loop((delta) => {
+  loop(({ delta }) => {
     const force = Vec.sub(target, body.center);
     force.norm();
     force.mul(F * delta);
@@ -30,7 +30,7 @@ export default function experiment(canvas, param) {
     body.step();
 
     canvas.clear();
-    canvas.path([body.center, target]);
+    canvas.path(body.center, target);
     canvas.rect(body);
   });
 }

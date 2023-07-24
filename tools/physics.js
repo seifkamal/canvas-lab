@@ -7,7 +7,7 @@ export class Gravity {
    * @returns {Vec}
    */
   static force(body) {
-    const force = Vec.down();
+    const force = Vec.down;
     force.mul(Gravity.C);
     force.mul(body.mass);
     return force;
