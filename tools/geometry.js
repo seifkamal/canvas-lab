@@ -121,14 +121,17 @@ export class Rect {
   get width() {
     return this.size.x;
   }
-  get halfWidth() {
-    return this.width / 2;
-  }
   get height() {
     return this.size.y;
   }
+  get halfWidth() {
+    return this.width / 2;
+  }
   get halfHeight() {
     return this.height / 2;
+  }
+  get halfSize() {
+    return new Vec(this.halfWidth, this.halfHeight);
   }
   get left() {
     return this.pos.x;
