@@ -59,12 +59,6 @@ export function canvas2D(canvas) {
       this.write(Chars[type], point);
     },
     /**
-     * @param {Vec} to
-     */
-    move(to) {
-      this.ctx.moveTo(to.x, to.y);
-    },
-    /**
      * @param {Vec} point
      */
     plot(point) {
@@ -91,6 +85,18 @@ export function canvas2D(canvas) {
      */
     rect(rect) {
       this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+    },
+    /**
+     * @param {Vec} center
+     * @param {number} radians
+     * @param {() => void} callback
+     */
+    rotated(center, radians, callback) {
+      this.ctx.translate(center.x, center.y);
+      this.ctx.rotate(radians);
+      this.ctx.translate(-center.x, -center.y);
+      callback();
+      this.ctx.resetTransform();
     },
   };
 }

@@ -40,6 +40,9 @@ export class Vec {
   get mag() {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
+  get head() {
+    return Math.atan2(this.y, this.x);
+  }
   static get zero() {
     return new Vec(0, 0);
   }
@@ -114,9 +117,10 @@ export class Vec {
 }
 
 export class Rect {
-  constructor(size = new Vec(), pos = new Vec()) {
+  constructor(size = new Vec(), pos = new Vec(), rot = 0) {
     this.size = size;
     this.pos = pos;
+    this.rot = rot;
   }
   get width() {
     return this.size.x;

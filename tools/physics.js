@@ -16,16 +16,19 @@ export class Gravity {
 
 export class Friction {
   static C = 0.1;
-  static Normal = 1;
   /**
+   * f = µN
+   *  µ -> coefficient = C
+   *  N -> normal force = mg/µ
+   *
    * @param {Body} body
    * @returns {Vec}
    */
   static force(body) {
     const force = Vec.norm(body.vel);
     force.mul(-1);
-    force.mul(Friction.C);
-    force.mul(Friction.Normal);
+    const normal = (body.mass * Gravity.C) / Friction.C;
+    force.mul(normal);
     return force;
   }
 }

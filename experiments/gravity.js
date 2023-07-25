@@ -1,5 +1,5 @@
 import { Vec, Rect } from "../tools/geometry.js";
-import { Body, Gravity, Friction } from "../tools/physics.js";
+import { Body, Gravity } from "../tools/physics.js";
 import { loop } from "../plugins/loop.js";
 
 /**
@@ -18,7 +18,6 @@ export default function experiment(canvas) {
   loop(() => {
     if (!body.touches(ground)) {
       body.applyForce(Gravity.force(body));
-      body.applyForce(Friction.force(body));
     } else if (body.vel.mag > 0.0001) {
       // TODO: use an actual force
       body.vel.mul(-0.5);
