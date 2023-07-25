@@ -2,16 +2,13 @@ import { loop } from "../plugins/loop.js";
 import { Vec } from "../tools/geometry.js";
 
 class Walker {
-  steps = 0;
-  speed = 1;
   direction = new Vec(1);
   constructor(pos = new Vec()) {
     this.pos = pos;
   }
-  step() {
-    this.pos.x += this.direction.x * this.speed;
-    this.pos.y += this.direction.y * this.speed;
-    this.steps++;
+  walk(steps = 1) {
+    this.pos.x += this.direction.x * steps;
+    this.pos.y += this.direction.y * steps;
   }
   turn() {
     this.direction.x = Math.random() > 0.5 ? 1 : -1;
@@ -40,20 +37,20 @@ class Walker {
 export default function experiment(canvas, param) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const walker = new Walker(center);
-
-  param("Speed", (value) => (walker.speed = Number(value)), {
+  const steps = param("Steps", {
     type: "number",
     min: "1",
     max: "5",
-    value: String(walker.speed),
+    value: "1",
   });
 
-  loop(() => {
-    if (walker.steps % 5 === 0) {
+  loop(({ frame }) => {
+    walker.walk(Number(steps.value));
+    walker.stayInSight(canvas);
+    if (frame % 5 === 0) {
       walker.turn();
     }
-    walker.step();
-    walker.stayInSight(canvas);
+
     canvas.plot(walker.pos);
   });
 }

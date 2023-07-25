@@ -34,6 +34,12 @@ export default function experiment(canvas, param) {
   const size = new Vec(100, 50);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const car = new Car(size, pos);
+
+  const speed = param("Speed", {
+    type: "number",
+    disabled: true,
+  });
+
   const controls = keys({
     w: "up",
     s: "down",
@@ -41,15 +47,10 @@ export default function experiment(canvas, param) {
     d: "right",
   });
 
-  const updateSpeed = param("Speed", undefined, {
-    type: "number",
-    disabled: true,
-  });
-
   loop(({ delta }) => {
     const dir = keysToVec(controls);
     car.drive(dir, delta);
-    updateSpeed(String(car.speed));
+    speed.value = car.speed;
 
     canvas.clear();
     canvas.rotated(car.center, car.rot, () => {

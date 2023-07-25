@@ -55,7 +55,7 @@ export default function experiment(canvas, param) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const walker = new DrunkWalker(center);
 
-  const updateDrinks = param("Drinks", undefined, {
+  const drinks = param("Drinks", {
     type: "number",
     min: "0",
     max: "25",
@@ -73,8 +73,7 @@ export default function experiment(canvas, param) {
     }
 
     if (walker.steps % 100 === 0) {
-      walker.drinks++;
-      updateDrinks(String(walker.drinks));
+      drinks.value = ++walker.drinks;
     }
 
     walker.step();

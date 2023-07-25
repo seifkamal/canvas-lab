@@ -2,45 +2,43 @@
  * @param {HTMLMenuElement} root
  * @returns A param creator function which, when used,
  * creates and appends an input param to the given menu
- * and returns a corresponding update function.
+ * and returns an object containing a value getter and setter.
+ *
  * @example
- * let force = 1;
- * const updateForce = param("Force", (v) => (force = v), {
+ * const force = param("Force", {
  *   type: 'number',
  *   min: '1',
  *   max: '10',
- *   value: String(F),
+ *   value: '1',
  * });
  *
- * let someOverride = 10;
- * updateForce(someOverride);
+ * console.log(force.value);
+ * force.value = 100;
  */
 export function menu(root) {
   /**
+   * @typedef {{ get value(): string; set value(val: any) }} Param
    * @param {string} title
-   * @param {(value: string) => void} [onChange]
    * @param {Partial<HTMLInputElement>} [config]
+   * @returns {Param}
    */
-  return (title, onChange, config) => {
+  return (title, config) => {
     const input = document.createElement("input");
     const label = document.createElement("label");
     label.append(`${title}: `, input);
     root.appendChild(label);
 
-    if (config !== undefined) {
+    if (config) {
       Object.entries(config).forEach(([key, value]) => (input[key] = value));
     }
 
-    input.addEventListener("change", (event) => {
-      if (!onChange || !(event.target instanceof HTMLInputElement)) {
-        return;
-      }
-      onChange(event.target.value);
-    });
-
-    /**
-     * @param {string} newValue
-     */
-    return (newValue) => (input.value = newValue);
+    return {
+      get value() {
+        return input.value;
+      },
+      set value(val) {
+        input.value = String(val);
+      },
+    };
   };
 }

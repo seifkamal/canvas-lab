@@ -12,19 +12,19 @@ export default function experiment(canvas, param) {
   const body = new Body(new Vec(100));
   body.mass = 10;
 
-  let F = 100;
-  param("Force", (v) => (F = Number(v)), {
+  const strength = param("Force", {
     type: "number",
     min: "0",
     max: "500",
     step: "25",
-    value: String(F),
+    value: "100",
   });
 
   loop(({ delta }) => {
     const force = Vec.sub(target, body.center);
     force.norm();
-    force.mul(F * delta);
+    force.mul(Number(strength.value));
+    force.mul(delta);
 
     body.applyForce(force);
     body.step();
