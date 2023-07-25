@@ -10,7 +10,12 @@
     <canvas></canvas>
     <menu></menu>
     <nav>
-      <button onclick="this.toggleAttribute('aria-pressed')">Nav</button>
+      <button
+        onclick="this.toggleAttribute('aria-pressed')"
+        onblur="this.toggleAttribute('aria-pressed', false)"
+      >
+        Nav
+      </button>
       <ul>
         <li><a href="?id=car">car</a></li>
         <li><a href="?id=binary-tree">binary-tree</a></li>

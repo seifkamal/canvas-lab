@@ -30,6 +30,8 @@
 :root {
   --c-bg: ghostwhite;
   --c-fg: black;
+  --c-sh: grey;
+  --sh: 0 4px 8px var(--c-sh);
 
   font-family: monospace;
   font-size: large;
@@ -44,11 +46,12 @@ canvas {
 menu {
   position: fixed;
   top: 1rem;
-  left: 1rem;
-  border-radius: 8px;
+  right: 1rem;
+  border-radius: 4px;
   padding: 0.5rem;
   color: var(--c-bg);
   background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
+  box-shadow: var(--sh);
 }
 
 menu:empty {
@@ -58,12 +61,10 @@ menu:empty {
 nav {
   position: fixed;
   top: 1rem;
-  inset-inline: 0;
-  margin-inline: auto;
+  left: 1rem;
   width: min(30ch, 100%);
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1rem;
 }
 
@@ -73,19 +74,25 @@ nav button {
   text-align: center;
   padding: 0.5rem;
   width: fit-content;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.5rem;
   color: var(--c-bg);
   background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
+  box-shadow: var(--sh);
 }
 
 nav ul {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: 150ms opacity linear;
 }
 
 nav:has(button[aria-pressed]) ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+  opacity: 1;
+}
+
+input[disabled] {
+  all: unset;
 }

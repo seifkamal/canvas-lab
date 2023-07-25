@@ -37,6 +37,8 @@ export default function experiment(canvas, param) {
 
   const speed = param("Speed", {
     type: "number",
+    min: "0",
+    max: "100",
     disabled: true,
   });
 
