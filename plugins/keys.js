@@ -1,36 +1,31 @@
 /**
  * @template {string} Action
  * @param {{ [key: string]: Action }} controls
- * @return {{ [key in Action]: boolean }}
+ * @return {Set<Action>}
  *
  * @example
- * const act = keyboard({
+ * const act = keys({
  *   a: 'left',
  *   d: 'right',
  *   ' ': 'jump',
  * });
- * console.log(act.jump);
+ * console.log(act.has('jump'));
  */
 export function keys(controls) {
-  /** @type {ReturnType<typeof keys<Action>>} */
-  // @ts-expect-error, as the object is being initialised.
-  const actions = {};
-  Object.entries(controls).forEach(([key, mapping]) => {
-    actions[mapping] = false;
+  const actions = new Set();
+
+  window.addEventListener("keydown", ({ key, repeat }) => {
+    if (!(key in controls) || repeat) {
+      return;
+    }
+    actions.add(controls[key]);
   });
 
   window.addEventListener("keyup", ({ key }) => {
     if (!(key in controls)) {
       return;
     }
-    actions[controls[key]] = false;
-  });
-
-  window.addEventListener("keydown", ({ key, repeat }) => {
-    if (!(key in controls) || repeat) {
-      return;
-    }
-    actions[controls[key]] = true;
+    actions.delete(controls[key]);
   });
 
   return actions;

@@ -13,12 +13,12 @@ class Car extends Body {
   drive(dir, delta) {
     const force = Vec.mul(dir, Car.HP);
     force.mul(delta);
-
     const friction = Friction.force(this);
     friction.mul(delta);
 
     this.applyForce(force);
     this.applyForce(friction);
+
     this.step();
     this.rot = this.vel.head;
   }
@@ -48,8 +48,7 @@ export default function experiment(canvas, param) {
   });
 
   loop(({ delta }) => {
-    const dir = keysToVec(controls);
-    car.drive(dir, delta);
+    car.drive(axes(controls), delta);
     speed.value = car.speed;
 
     canvas.clear();
@@ -60,17 +59,13 @@ export default function experiment(canvas, param) {
 }
 
 /**
- * @param {{
- *   up: boolean;
- *   down: boolean;
- *   left: boolean;
- *   right: boolean;
- * }} keys
+ * @param {Set} keys
  */
-function keysToVec(keys) {
-  if (keys.up) return Vec.up;
-  if (keys.down) return Vec.down;
-  if (keys.left) return Vec.left;
-  if (keys.right) return Vec.right;
-  return Vec.zero;
+function axes(keys) {
+  const vec = Vec.zero;
+  if (keys.has("up")) vec.add(Vec.up);
+  if (keys.has("down")) vec.add(Vec.down);
+  if (keys.has("left")) vec.add(Vec.left);
+  if (keys.has("right")) vec.add(Vec.right);
+  return vec;
 }
