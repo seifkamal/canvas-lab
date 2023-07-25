@@ -1,5 +1,5 @@
 /**
- * @typedef {{ delta: number; count: number; }} StepInfo
+ * @typedef {{ delta: number; frame: number; }} StepInfo
  * @typedef {(info: StepInfo) => void} StepFunc
  * @typedef {{
  *   end(): void;
@@ -12,27 +12,29 @@
  */
 export function loop(onStep) {
   if (typeof onStep !== "function") {
-    throw new Error("onStep must be a function");
+    throw new Error("loop requires an onStep function");
   }
 
   let count = 0;
-  let lastFrame = 0;
+  let prev = 0;
   let paused = false;
   let ended = false;
-  const step = (elapsed = 0) => {
+  const step = (timestamp = 0) => {
     if (ended) {
       return;
     }
 
-    const seconds = elapsed / 1_000;
-    const delta = seconds - lastFrame;
+    const now = timestamp / 1_000;
+    // For now, limit frame jumps to 1fps.
+    // This is to avoid huge jumps when returning to a suspended window.
+    const delta = Math.min(now - prev, 1);
 
     if (!paused) {
-      onStep({ delta, count });
+      onStep({ delta, frame: count });
       count++;
     }
 
-    lastFrame = seconds;
+    prev = now;
     requestAnimationFrame(step);
   };
 
