@@ -1,6 +1,6 @@
 import { Vec, Rect } from "../tools/geometry.js";
 import { Body, Gravity } from "../tools/physics.js";
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 
 /**
  * @type {import('../index').Experiment}
@@ -15,7 +15,7 @@ export default function experiment(canvas) {
   const ground = new Rect(new Vec(canvas.width, 50));
   ground.pos.y = canvas.height - ground.height;
 
-  loop(() => {
+  animate(() => {
     if (!body.touches(ground)) {
       body.applyForce(Gravity.force(body));
     } else if (body.vel.mag > 0.0001) {

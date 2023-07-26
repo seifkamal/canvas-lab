@@ -1,7 +1,7 @@
 import { Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
 import { LinkedList } from "../tools/struct.js";
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 
 /**
  * @type {import('../index').Experiment}
@@ -13,10 +13,10 @@ export default function experiment(canvas, param) {
     min: "0",
     max: "1",
     step: "0.1",
-    value: "0.8",
+    value: "0.2",
   });
 
-  loop(({ delta }) => {
+  animate(({ delta }) => {
     canvas.clear();
 
     const force = Vec.down;
@@ -27,7 +27,8 @@ export default function experiment(canvas, param) {
       canvas.ellipse(item.value);
 
       if (item.next) {
-        const force = Vec.mul(item.value.acc, Number(dissipation.value));
+        const C = 1 - Number(dissipation.value);
+        const force = Vec.mul(item.value.acc, C);
         item.next?.value.applyForce(force);
       }
 
@@ -47,13 +48,14 @@ function makeCircleList(center) {
   const count = 10;
   const rad = 10;
   const gap = rad * 10;
-  const circles = Array(count)
-    .fill(null)
-    .map((_v, i) => {
-      const n = (count / 2 - i) * gap;
-      const pos = new Vec(center.x + n, center.y);
-      return new Body(new Vec(10), pos);
-    });
+
+  /** @type {Body[]} */
+  let circles = [];
+  for (let i = 1; i <= count; i++) {
+    const xOffset = (count / 2 - i) * gap;
+    const pos = Vec.add(center, new Vec(xOffset, 0));
+    circles.push(new Body(new Vec(10), pos));
+  }
 
   return LinkedList.from(circles);
 }

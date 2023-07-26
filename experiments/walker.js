@@ -1,4 +1,4 @@
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 import { Vec } from "../tools/geometry.js";
 
 class Walker {
@@ -44,7 +44,7 @@ export default function experiment(canvas, param) {
     value: "1",
   });
 
-  loop(({ frame }) => {
+  animate(({ frame }) => {
     walker.walk(Number(steps.value));
     walker.stayInSight(canvas);
     if (frame % 5 === 0) {

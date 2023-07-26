@@ -1,4 +1,4 @@
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 import { Vec } from "../tools/geometry.js";
 
 class Walker {
@@ -63,7 +63,7 @@ export default function experiment(canvas, param) {
     disabled: true,
   });
 
-  const { end } = loop(() => {
+  const { end } = animate(() => {
     if (walker.drinks === 25) {
       canvas.ctx.font = "24px sans-serif";
       canvas.ctx.fillStyle = "red";

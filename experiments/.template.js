@@ -1,6 +1,6 @@
 import { Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 
 /**
  * @type {import('../index').Experiment}
@@ -11,7 +11,7 @@ export default function experiment(canvas) {
   const body = new Body(size, pos);
   const force = new Vec(10);
 
-  loop(({ delta }) => {
+  animate(({ delta }) => {
     canvas.clear();
     canvas.rect(body);
 

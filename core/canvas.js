@@ -7,8 +7,8 @@ const Chars = {
 
 /**
  * @param {HTMLCanvasElement} canvas
- * @returns A wrapper object around the given canvas that exposes convenience
- * functions for 2D operations.
+ * @returns A wrapper object around the given canvas
+ * that exposes convenience functions for 2D operations.
  */
 export function canvas2D(canvas) {
   const ctx = canvas.getContext("2d");

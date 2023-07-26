@@ -1,7 +1,7 @@
 import { Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
 import { cursor } from "../plugins/cursor.js";
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 
 /**
  * @type {import('../index').Experiment}
@@ -20,7 +20,7 @@ export default function experiment(canvas, param) {
     value: "100",
   });
 
-  loop(({ delta }) => {
+  animate(({ delta }) => {
     const force = Vec.sub(target, body.center);
     force.norm();
     force.mul(Number(strength.value));

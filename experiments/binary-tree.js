@@ -1,4 +1,4 @@
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 import { Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
 import { BinaryTree } from "../tools/struct.js";
@@ -29,7 +29,7 @@ export default function experiment(canvas) {
   const center = new Vec(canvas.centerX, canvas.centerY / 3);
   const tree = createSomeTree(center);
 
-  loop(({ delta }) => {
+  animate(({ delta }) => {
     canvas.clear();
     tree.walk((node) => {
       // Draw

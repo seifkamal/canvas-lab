@@ -10,7 +10,7 @@
  * @param {StepFunc} onStep
  * @returns {LoopControls}
  */
-export function loop(onStep) {
+export function animate(onStep) {
   if (typeof onStep !== "function") {
     throw new Error("loop requires an onStep function");
   }

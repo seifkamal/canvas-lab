@@ -1,7 +1,7 @@
 import { Vec } from "../tools/geometry.js";
 import { Body, Friction } from "../tools/physics.js";
 import { keys } from "../plugins/keys.js";
-import { loop } from "../plugins/loop.js";
+import { animate } from "../plugins/animate.js";
 
 class Car extends Body {
   static HP = 20;
@@ -49,7 +49,7 @@ export default function experiment(canvas, param) {
     d: "right",
   });
 
-  loop(({ delta }) => {
+  animate(({ delta }) => {
     car.drive(axes(controls), delta);
     speed.value = car.speed;
 
