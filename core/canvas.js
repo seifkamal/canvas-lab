@@ -87,6 +87,22 @@ export function canvas2D(canvas) {
       this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
     },
     /**
+     * @param {Rect} rect
+     */
+    ellipse(rect) {
+      this.ctx.beginPath();
+      this.ctx.ellipse(
+        rect.left,
+        rect.top,
+        rect.width,
+        rect.height,
+        0,
+        Math.PI * 2,
+        0
+      );
+      this.ctx.fill();
+    },
+    /**
      * @param {Vec} center
      * @param {number} radians
      * @param {() => void} callback
