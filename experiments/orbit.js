@@ -9,7 +9,7 @@ import { loop } from "../plugins/loop.js";
 export default function experiment(canvas, param) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const target = cursor(center);
-  const body = new Body(new Vec(100));
+  const body = new Body(new Vec(40));
   body.mass = 10;
 
   const strength = param("Force", {
@@ -30,7 +30,8 @@ export default function experiment(canvas, param) {
     body.step();
 
     canvas.clear();
+    canvas.ctx.lineWidth = 0.4;
     canvas.path(body.center, target);
-    canvas.rect(body);
+    canvas.ellipse(body);
   });
 }
