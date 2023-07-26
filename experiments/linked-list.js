@@ -7,7 +7,8 @@ import { animate } from "../plugins/animate.js";
  * @type {import('../index').Experiment}
  */
 export default function experiment(canvas, param) {
-  const list = makeCircleList(canvas.center);
+  const list = makeCircleList(canvas);
+
   const dissipation = param("Dissipation", {
     type: "number",
     min: "0",
@@ -41,20 +42,23 @@ export default function experiment(canvas, param) {
 }
 
 /**
- * @param {Vec} center
+ * @param {Parameters<typeof experiment>['0']} canvas
  * @returns {LinkedList<Body>}
  */
-function makeCircleList(center) {
-  const count = 10;
-  const rad = 10;
-  const gap = rad * 10;
+function makeCircleList(canvas) {
+  const r = 10;
+  const d = r * 2;
+  const count = 15;
+  const half = count / 2;
+  const gap = canvas.halfWidth / count;
+  const centerX = canvas.centerX;
 
   /** @type {Body[]} */
   let circles = [];
-  for (let i = 1; i <= count; i++) {
-    const xOffset = (count / 2 - i) * gap;
-    const pos = Vec.add(center, new Vec(xOffset, 0));
-    circles.push(new Body(new Vec(10), pos));
+  for (let i = 0; i < count; i++) {
+    const x = centerX + d + gap * (i - half);
+    const pos = new Vec(x, canvas.centerY);
+    circles.push(new Body(new Vec(r), pos));
   }
 
   return LinkedList.from(circles);
