@@ -60,12 +60,18 @@ menu:empty {
 
 nav {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 0.5rem;
+  left: 0.5rem;
   width: min(30ch, 100%);
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  border-radius: 4px;
   gap: 1rem;
+}
+
+nav:has(button[aria-pressed]) {
+  background-color: color-mix(in srgb, transparent, var(--c-bg) 80%);
 }
 
 nav button {
@@ -74,8 +80,7 @@ nav button {
   text-align: center;
   padding: 0.5rem;
   width: fit-content;
-  border-radius: 4px;
-  padding: 0.5rem;
+  border-radius: inherit;
   color: var(--c-bg);
   background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
   box-shadow: var(--sh);
