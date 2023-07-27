@@ -6,9 +6,16 @@ import { animate } from "../plugins/animate.js";
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas, param) {
-  const list = makeCircleList(canvas);
+export default function experiment(canvas, param, info) {
+  info(
+    `This is a ${info.link(
+      "linked list",
+      "https://en.wikipedia.org/wiki/Linked_list"
+    )}.`,
+    "A linear data collection in which each element points to the next one."
+  );
 
+  const list = makeCircleList(canvas);
   const dissipation = param("Dissipation", {
     type: "number",
     min: "0",

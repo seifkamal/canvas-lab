@@ -1,18 +1,21 @@
 import { canvas2D } from "./core/canvas.js";
+import { info } from "./core/info.js";
 import { menu } from "./core/menu.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const canvas = getCanvas2D();
   const menu = getParamMenu();
+  const info = getInfoPopover();
   const exp = await loadExperiment();
 
-  exp(canvas, menu);
+  exp(canvas, menu, info);
 });
 
 /**
  * @typedef {ReturnType<getCanvas2D>} Canvas
  * @typedef {ReturnType<getParamMenu>} Menu
- * @typedef {(canvas: Canvas, menu: Menu) => void} Experiment
+ * @typedef {ReturnType<getInfoPopover>} Info
+ * @typedef {(canvas: Canvas, menu: Menu, info: Info) => void} Experiment
  *
  * @returns {Promise<Experiment>}
  */
@@ -45,4 +48,12 @@ function getParamMenu() {
     document.body.appendChild(document.createElement("menu"));
 
   return menu(root);
+}
+
+function getInfoPopover() {
+  const root =
+    document.querySelector("details") ||
+    document.body.appendChild(document.createElement("details"));
+
+  return info(root);
 }

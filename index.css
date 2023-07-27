@@ -10,6 +10,7 @@
 
   :root {
     height: 100%;
+    line-height: 1.5;
   }
 
   body {
@@ -31,73 +32,127 @@
   --c-bg: ghostwhite;
   --c-fg: black;
   --c-sh: grey;
+  --c-br: color-mix(in srgb, transparent, var(--c-bg) 10%);
+  --br: 1px dashed var(--c-br);
   --sh: 0 4px 8px var(--c-sh);
 
   font-family: monospace;
   font-size: large;
+  text-underline-offset: 4px;
   background-color: var(--c-bg);
+  border-color: var(--br);
 }
 
+main,
 canvas {
   width: 100%;
   height: 100%;
 }
 
-menu {
+header {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  border-radius: 4px;
+  top: 0;
+  inset-inline: 0;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  gap: 1rem;
+}
+
+.hud {
   padding: 0.5rem;
   color: var(--c-bg);
   background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
   box-shadow: var(--sh);
+  border-radius: 4px;
 }
 
-menu:empty {
+.hud:empty {
   display: none;
 }
 
-nav {
-  position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
-  width: min(30ch, 100%);
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  gap: 1rem;
+details {
+  grid-column: 2;
+  width: min(50ch, 100%);
+  height: fit-content;
+  justify-self: center;
 }
 
-nav:has(button[aria-pressed]) {
-  background-color: color-mix(in srgb, transparent, var(--c-bg) 80%);
+details > p {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-top: var(--br);
+}
+
+details > summary {
+  list-style-type: "¡ ";
+  padding: 0 0.5rem;
+  cursor: help;
+}
+
+menu {
+  grid-column: 3;
+  height: fit-content;
+  width: fit-content;
+  justify-self: end;
+}
+
+nav {
+  grid-column: 1;
+  position: relative;
+  width: min(30ch, 100%);
+  height: fit-content;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 nav button {
   all: unset;
   cursor: pointer;
   text-align: center;
-  padding: 0.5rem;
   width: fit-content;
-  border-radius: inherit;
-  color: var(--c-bg);
-  background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
-  box-shadow: var(--sh);
 }
 
 nav ul {
+  position: absolute;
+  top: calc(100% + 1rem);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   opacity: 0;
-  transition: 150ms opacity linear;
+  visibility: hidden;
+  transition: 150ms opacity linear, visibility 150ms linear;
 }
 
 nav:has(button[aria-pressed]) ul {
   opacity: 1;
+  visibility: visible;
 }
 
+input {
+  border: var(--br);
+  border-radius: 4px;
+  padding: 0 0.25rem;
+  background-color: color-mix(in srgb, transparent, var(--c-bg) 90%);
+}
+
+/* The menu module uses disabled inputs as labels. */
 input[disabled] {
   all: unset;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+kbd {
+  border-radius: 2px;
+  border: var(--br);
+  background-color: var(--c-br);
+  padding: 0.1rem 0.25rem;
+  letter-spacing: 2;
 }

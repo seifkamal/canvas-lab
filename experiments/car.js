@@ -30,7 +30,7 @@ class Car extends Body {
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas, param) {
+export default function experiment(canvas, param, details) {
   const size = new Vec(100, 50);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const car = new Car(size, pos);
@@ -48,6 +48,8 @@ export default function experiment(canvas, param) {
     a: "left",
     d: "right",
   });
+
+  details("Use <kbd>wasd</kbd> keys to move");
 
   animate(({ delta }) => {
     car.drive(axes(controls), delta);
