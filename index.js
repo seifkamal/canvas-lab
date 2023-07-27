@@ -3,12 +3,15 @@ import { info } from "./core/info.js";
 import { param } from "./core/param.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const canvas = getCanvas2D();
-  const param = getParamFunc();
-  const info = getInfoFunc();
-  const exp = await loadExperiment();
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id") || "intro";
+  const exp = await loadExperiment(id);
 
-  exp({ canvas, param, info });
+  exp({
+    canvas: getCanvas2D(),
+    param: getParamFunc(),
+    info: getInfoFunc(),
+  });
 });
 
 /**
@@ -18,11 +21,10 @@ document.addEventListener("DOMContentLoaded", async () => {
  * @typedef {{ canvas: Canvas, param: ParamFunc, info: InfoFunc }} Context
  * @typedef {(context: Context) => void} Experiment
  *
+ * @param {string} id
  * @returns {Promise<Experiment>}
  */
-async function loadExperiment() {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id") || "walker";
+async function loadExperiment(id) {
   const expMod = await import(`./experiments/${id}.js`);
   const exp = expMod.default;
   if (!exp) {
