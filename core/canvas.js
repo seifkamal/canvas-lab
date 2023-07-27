@@ -84,7 +84,15 @@ export function canvas2D(canvas) {
      * @param {Rect} rect
      */
     rect(rect) {
-      this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+      const draw = () =>
+        this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+
+      if (rect.rot) {
+        this.rotated(rect.center, rect.rot, draw);
+        return;
+      }
+
+      draw();
     },
     /**
      * @param {Rect} rect
@@ -119,7 +127,15 @@ export function canvas2D(canvas) {
      * @param {CanvasImageSource} image
      */
     image(rect, image) {
-      this.ctx.drawImage(image, rect.left, rect.top, rect.width, rect.height);
+      const draw = () =>
+        this.ctx.drawImage(image, rect.left, rect.top, rect.width, rect.height);
+
+      if (rect.rot) {
+        this.rotated(rect.center, rect.rot, draw);
+        return;
+      }
+
+      draw();
     },
   };
 }

@@ -18,10 +18,24 @@ class Car extends Body {
   power = 20;
   sprite = Sprite("assets/car.png");
   /**
+   * @param {Set} controls
+   * @param {number} delta
+   * @returns {number} speed
+   */
+  drive(controls, delta) {
+    const dir = Vec.zero;
+    if (controls.has("up")) dir.add(Vec.up);
+    if (controls.has("down")) dir.add(Vec.down);
+    if (controls.has("left")) dir.add(Vec.left);
+    if (controls.has("right")) dir.add(Vec.right);
+    return this.move(dir, delta);
+  }
+  /**
    * @param {Vec} dir
    * @param {number} delta
+   * @returns {number} speed
    */
-  drive(dir, delta) {
+  move(dir, delta) {
     const force = Vec.mul(dir, this.power);
     force.mul(delta);
     const friction = Friction.force(this);
@@ -34,6 +48,8 @@ class Car extends Body {
     if (this.vel.mag > 0.01) {
       this.rot = this.vel.head;
     }
+
+    return this.speed;
   }
   get speed() {
     return Math.round(this.vel.mag * 10);
@@ -46,7 +62,7 @@ class Car extends Body {
 export default function experiment({ canvas, param, info }) {
   info("Use <kbd>wasd</kbd> keys to move");
 
-  const size = new Vec(200);
+  const size = new Vec(150);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const car = new Car(size, pos);
 
@@ -65,24 +81,9 @@ export default function experiment({ canvas, param, info }) {
   });
 
   animate(({ delta }) => {
-    car.drive(axes(controls), delta);
-    speed.value = car.speed;
+    speed.value = car.drive(controls, delta);
 
     canvas.clear();
-    canvas.rotated(car.center, car.rot, () => {
-      canvas.image(car, car.sprite);
-    });
+    canvas.image(car, car.sprite);
   });
-}
-
-/**
- * @param {Set} keys
- */
-function axes(keys) {
-  const vec = Vec.zero;
-  if (keys.has("up")) vec.add(Vec.up);
-  if (keys.has("down")) vec.add(Vec.down);
-  if (keys.has("left")) vec.add(Vec.left);
-  if (keys.has("right")) vec.add(Vec.right);
-  return vec;
 }
