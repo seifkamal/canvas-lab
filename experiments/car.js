@@ -51,7 +51,13 @@ class Car extends Body {
  * @type {import('../index').Experiment}
  */
 export default function experiment({ canvas, param, info }) {
-  info("Use <kbd>wasd</kbd> keys to move");
+  info(
+    "Use <kbd>wasd</kbd> keys to move",
+    `Sprite source: ${info.link(
+      "Free Icons and PNG Backgrounds",
+      "https://www.freeiconspng.com/img/11558"
+    )}.`
+  );
 
   const size = new Vec(150);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
