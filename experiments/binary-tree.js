@@ -1,5 +1,5 @@
 import { animate } from "../plugins/animate.js";
-import { Vec } from "../tools/geometry.js";
+import { Rect, Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
 import { BinaryTree } from "../tools/struct.js";
 
@@ -25,7 +25,17 @@ class RandomForce {
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment({ canvas }) {
+export default function experiment({ canvas, info }) {
+  info(
+    `This is a ${info.link(
+      "binary tree",
+      "https://en.wikipedia.org/wiki/Binary_tree"
+    )}.`,
+    `A non-linear data structure in which each element has 
+    up to two children, typically referred to as the <b>left</b>
+    and <b>right</b> nodes.`
+  );
+
   const center = new Vec(canvas.centerX, canvas.centerY / 3);
   const tree = createSomeTree(center);
 
@@ -33,6 +43,7 @@ export default function experiment({ canvas }) {
     canvas.clear();
     tree.walk((node) => {
       // Draw
+      canvas.ellipse(node.value);
       if (node.left) {
         canvas.path(node.value.pos, node.left.value.pos);
       }
@@ -59,6 +70,8 @@ export default function experiment({ canvas }) {
  * @param {Vec} at
  */
 function createSomeTree(at) {
+  const size = 4;
+
   /**
    * @param {Vec} to
    * @param {1 | -1} dir
@@ -77,14 +90,14 @@ function createSomeTree(at) {
       return;
     }
     node.left = new BinaryTree(
-      new Body(Vec.zero, someVecNear(node.value.pos, -1))
+      new Body(new Vec(size), someVecNear(node.value.pos, -1))
     );
     node.right = new BinaryTree(
-      new Body(Vec.zero, someVecNear(node.value.pos))
+      new Body(new Vec(size), someVecNear(node.value.pos))
     );
   };
 
-  const tree = new BinaryTree(new Body(Vec.zero, at));
+  const tree = new BinaryTree(new Body(new Vec(size), at));
   branch(tree);
   branch(tree.left);
   branch(tree.left?.left);
