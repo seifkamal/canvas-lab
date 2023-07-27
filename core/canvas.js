@@ -123,12 +123,18 @@ export function canvas2D(canvas) {
       this.ctx.resetTransform();
     },
     /**
-     * @param {Rect} rect
-     * @param {CanvasImageSource} image
+     * @typedef {{ image: CanvasImageSource }} HasImage
+     * @param {Rect & HasImage} rect
      */
-    image(rect, image) {
+    image(rect) {
       const draw = () =>
-        this.ctx.drawImage(image, rect.left, rect.top, rect.width, rect.height);
+        this.ctx.drawImage(
+          rect.image,
+          rect.left,
+          rect.top,
+          rect.width,
+          rect.height
+        );
 
       if (rect.rot) {
         this.rotated(rect.center, rect.rot, draw);

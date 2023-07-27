@@ -1,22 +1,13 @@
 import { Vec } from "../tools/geometry.js";
+import { Sprite } from "../tools/sprite.js";
 import { Body, Friction } from "../tools/physics.js";
 import { keys } from "../plugins/keys.js";
 import { animate } from "../plugins/animate.js";
 
-/**
- * @param {string} url
- * @returns {CanvasImageSource}
- */
-const Sprite = (url) => {
-  const image = new Image();
-  image.src = url;
-  return image;
-};
-
 class Car extends Body {
   mass = 10;
   power = 20;
-  sprite = Sprite("assets/car.png");
+  image = new Sprite("assets/car.png");
   /**
    * @param {Set} controls
    * @param {number} delta
@@ -84,6 +75,6 @@ export default function experiment({ canvas, param, info }) {
     speed.value = car.drive(controls, delta);
 
     canvas.clear();
-    canvas.image(car, car.sprite);
+    canvas.image(car);
   });
 }
