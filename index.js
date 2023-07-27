@@ -1,21 +1,22 @@
 import { canvas2D } from "./core/canvas.js";
 import { info } from "./core/info.js";
-import { menu } from "./core/menu.js";
+import { param } from "./core/param.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const canvas = getCanvas2D();
-  const menu = getParamMenu();
-  const info = getInfoPopover();
+  const param = getParamFunc();
+  const info = getInfoFunc();
   const exp = await loadExperiment();
 
-  exp(canvas, menu, info);
+  exp({ canvas, param, info });
 });
 
 /**
  * @typedef {ReturnType<getCanvas2D>} Canvas
- * @typedef {ReturnType<getParamMenu>} Menu
- * @typedef {ReturnType<getInfoPopover>} Info
- * @typedef {(canvas: Canvas, menu: Menu, info: Info) => void} Experiment
+ * @typedef {ReturnType<getParamFunc>} ParamFunc
+ * @typedef {ReturnType<getInfoFunc>} InfoFunc
+ * @typedef {{ canvas: Canvas, param: ParamFunc, info: InfoFunc }} Context
+ * @typedef {(context: Context) => void} Experiment
  *
  * @returns {Promise<Experiment>}
  */
@@ -42,15 +43,15 @@ function getCanvas2D() {
   return canvas2D(canvas);
 }
 
-function getParamMenu() {
+function getParamFunc() {
   const root =
     document.querySelector("menu") ||
     document.body.appendChild(document.createElement("menu"));
 
-  return menu(root);
+  return param(root);
 }
 
-function getInfoPopover() {
+function getInfoFunc() {
   const root =
     document.querySelector("details") ||
     document.body.appendChild(document.createElement("details"));

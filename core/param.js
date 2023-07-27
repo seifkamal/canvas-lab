@@ -1,5 +1,5 @@
 /**
- * @param {HTMLMenuElement} root
+ * @param {HTMLMenuElement} menu
  * @returns A param creator function which, when used,
  * creates and appends an input param to the given menu
  * and returns an object containing a value getter and setter.
@@ -15,7 +15,7 @@
  * console.log(force.value);
  * force.value = 100;
  */
-export function menu(root) {
+export function param(menu) {
   /**
    * @typedef {{ get value(): string; set value(val: any) }} Param
    * @param {string} title
@@ -26,7 +26,7 @@ export function menu(root) {
     const input = document.createElement("input");
     const label = document.createElement("label");
     label.append(`${title}: `, input);
-    root.appendChild(label);
+    menu.appendChild(label);
 
     if (config) {
       Object.entries(config).forEach(([key, value]) => (input[key] = value));

@@ -6,7 +6,7 @@ import { animate } from "../plugins/animate.js";
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas, param, info) {
+export default function experiment({ canvas, param, info }) {
   info(
     `This is a ${info.link(
       "linked list",
@@ -49,7 +49,7 @@ export default function experiment(canvas, param, info) {
 }
 
 /**
- * @param {Parameters<typeof experiment>['0']} canvas
+ * @param {import("../index").Canvas} canvas
  * @returns {LinkedList<Body>}
  */
 function makeCircleList(canvas) {

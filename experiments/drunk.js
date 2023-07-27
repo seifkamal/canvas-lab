@@ -51,7 +51,7 @@ class DrunkWalker extends Walker {
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas, param) {
+export default function experiment({ canvas, param }) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const walker = new DrunkWalker(center);
 

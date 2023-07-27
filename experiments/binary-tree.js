@@ -25,7 +25,7 @@ class RandomForce {
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas) {
+export default function experiment({ canvas }) {
   const center = new Vec(canvas.centerX, canvas.centerY / 3);
   const tree = createSomeTree(center);
 

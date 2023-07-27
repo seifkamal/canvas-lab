@@ -6,7 +6,7 @@ import { animate } from "../plugins/animate.js";
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas, param) {
+export default function experiment({ canvas, param }) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const target = cursor(center);
   const body = new Body(new Vec(40));

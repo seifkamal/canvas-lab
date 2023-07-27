@@ -5,7 +5,7 @@ import { animate } from "../plugins/animate.js";
 /**
  * @type {import('../index').Experiment}
  */
-export default function experiment(canvas) {
+export default function experiment({ canvas }) {
   const size = new Vec(100);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const body = new Body(size, pos);
