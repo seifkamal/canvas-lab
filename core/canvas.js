@@ -114,5 +114,12 @@ export function canvas2D(canvas) {
       callback();
       this.ctx.resetTransform();
     },
+    /**
+     * @param {Rect} rect
+     * @param {CanvasImageSource} image
+     */
+    image(rect, image) {
+      this.ctx.drawImage(image, rect.left, rect.top, rect.width, rect.height);
+    },
   };
 }

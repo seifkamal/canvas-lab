@@ -3,15 +3,26 @@ import { Body, Friction } from "../tools/physics.js";
 import { keys } from "../plugins/keys.js";
 import { animate } from "../plugins/animate.js";
 
+/**
+ * @param {string} url
+ * @returns {CanvasImageSource}
+ */
+const Sprite = (url) => {
+  const image = new Image();
+  image.src = url;
+  return image;
+};
+
 class Car extends Body {
-  static HP = 20;
   mass = 10;
+  power = 20;
+  sprite = Sprite("assets/car.png");
   /**
    * @param {Vec} dir
    * @param {number} delta
    */
   drive(dir, delta) {
-    const force = Vec.mul(dir, Car.HP);
+    const force = Vec.mul(dir, this.power);
     force.mul(delta);
     const friction = Friction.force(this);
     friction.mul(delta);
@@ -20,7 +31,9 @@ class Car extends Body {
     this.applyForce(friction);
 
     this.step();
-    this.rot = this.vel.head;
+    if (this.vel.mag > 0.01) {
+      this.rot = this.vel.head;
+    }
   }
   get speed() {
     return Math.round(this.vel.mag * 10);
@@ -33,7 +46,7 @@ class Car extends Body {
 export default function experiment({ canvas, param, info }) {
   info("Use <kbd>wasd</kbd> keys to move");
 
-  const size = new Vec(100, 50);
+  const size = new Vec(200);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const car = new Car(size, pos);
 
@@ -57,7 +70,7 @@ export default function experiment({ canvas, param, info }) {
 
     canvas.clear();
     canvas.rotated(car.center, car.rot, () => {
-      canvas.rect(car);
+      canvas.image(car, car.sprite);
     });
   });
 }
