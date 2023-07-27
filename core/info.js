@@ -20,7 +20,7 @@ export function info(root) {
       root.innerHTML = `<p>${extra}</p>`;
     }
 
-    sum.innerHTML = summary;
+    sum.innerHTML = `<p>${summary}</p>`;
     root.prepend(sum);
   };
 

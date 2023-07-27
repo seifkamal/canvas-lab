@@ -87,9 +87,23 @@ details > p {
 }
 
 details > summary {
-  list-style-type: "¡ ";
+  list-style-type: none;
   padding: 0 0.5rem;
   cursor: help;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+details > summary::before {
+  content: url("assets/arrow.svg");
+  display: inline-block;
+  rotate: 90deg;
+  transition: rotate 150ms ease-out;
+}
+
+details[open] > summary::before {
+  rotate: 180deg;
 }
 
 menu {
