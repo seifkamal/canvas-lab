@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
 @layer reset {
   *,
   *::before,
@@ -36,7 +38,7 @@
   --br: 1px dashed var(--c-br);
   --sh: 0 4px 8px var(--c-sh);
 
-  font-family: monospace;
+  font-family: "Share Tech Mono", monospace;
   font-size: large;
   text-underline-offset: 4px;
   background-color: var(--c-bg);

@@ -32,8 +32,8 @@ export default function experiment({ canvas, info }) {
       "https://en.wikipedia.org/wiki/Binary_tree"
     )}.`,
     `A non-linear data structure in which each element has 
-    up to two children, typically referred to as the <b>left</b>
-    and <b>right</b> nodes.`
+    up to two children, typically referred to as the left
+    and right nodes.`
   );
 
   const center = new Vec(canvas.centerX, canvas.centerY / 3);
