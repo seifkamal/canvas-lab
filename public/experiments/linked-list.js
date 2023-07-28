@@ -16,6 +16,7 @@ export default function experiment({ canvas, param, info }) {
   );
 
   const list = makeCircleList(canvas);
+  const force = new Vec(0, 0.005);
   const dissipation = param("Dissipation", {
     type: "number",
     min: "0",
@@ -24,11 +25,9 @@ export default function experiment({ canvas, param, info }) {
     value: "0.2",
   });
 
-  animate(({ delta }) => {
+  animate(() => {
     canvas.clear();
 
-    const force = Vec.down;
-    force.mul(delta);
     list.value.applyForce(force);
 
     for (let item of list) {

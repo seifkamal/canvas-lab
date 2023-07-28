@@ -1,23 +1,20 @@
 import { animate } from "../plugins/animate.js";
-import { Rect, Vec } from "../tools/geometry.js";
+import { Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
 import { BinaryTree } from "../tools/struct.js";
 
-class RandomForce {
-  static C = 0.1;
-  static force() {
-    const force = new Vec();
-    const chance = Math.random();
-    if (chance < 0.25) {
-      force.add(Vec.up);
-    } else if (chance < 0.5) {
-      force.add(Vec.down);
-    } else if (chance < 0.75) {
-      force.add(Vec.left);
-    } else {
-      force.add(Vec.right);
-    }
-    force.mul(RandomForce.C);
+class MagneticForce {
+  static C = 0.001;
+  /**
+   * @param {Body} body
+   * @param {Vec} anchor
+   * @returns
+   */
+  static force(body, anchor) {
+    const force = Vec.sub(anchor, body.pos);
+    force.y = 0;
+    force.norm();
+    force.mul(MagneticForce.C);
     return force;
   }
 }
@@ -39,7 +36,7 @@ export default function experiment({ canvas, info }) {
   const center = new Vec(canvas.centerX, canvas.centerY / 3);
   const tree = createSomeTree(center);
 
-  animate(({ delta }) => {
+  animate(() => {
     canvas.clear();
     tree.walk((node) => {
       // Draw
@@ -51,8 +48,7 @@ export default function experiment({ canvas, info }) {
         canvas.path(node.value.pos, node.right.value.pos);
       }
       // Step
-      const force = RandomForce.force();
-      force.mul(delta);
+      const force = MagneticForce.force(node.value, canvas.center);
       node.value.applyForce(force);
       node.value.step();
       // Keep within bounds

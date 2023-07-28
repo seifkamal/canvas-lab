@@ -81,18 +81,20 @@ export function canvas2D(canvas) {
       this.ctx.closePath();
     },
     /**
-     * @param {Rect} rect
+     * @param {Rect[]} rects
      */
-    rect(rect) {
-      const draw = () =>
-        this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+    rect(...rects) {
+      rects.forEach((rect) => {
+        const draw = () =>
+          this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
 
-      if (rect.rot) {
-        this.rotated(rect.center, rect.rot, draw);
-        return;
-      }
+        if (rect.rot) {
+          this.rotated(rect.center, rect.rot, draw);
+          return;
+        }
 
-      draw();
+        draw();
+      });
     },
     /**
      * @param {Rect} rect

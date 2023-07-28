@@ -25,8 +25,10 @@ export function param(menu) {
   return (title, config) => {
     const input = document.createElement("input");
     const label = document.createElement("label");
+    const item = document.createElement("li");
     label.append(`${title}: `, input);
-    menu.appendChild(label);
+    item.appendChild(label);
+    menu.appendChild(item);
 
     if (config) {
       Object.entries(config).forEach(([key, value]) => (input[key] = value));
