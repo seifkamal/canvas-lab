@@ -81,20 +81,18 @@ export function canvas2D(canvas) {
       this.ctx.closePath();
     },
     /**
-     * @param {Rect[]} rects
+     * @param {Rect} rect
      */
-    rect(...rects) {
-      rects.forEach((rect) => {
-        const draw = () =>
-          this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
+    rect(rect) {
+      const draw = () =>
+        this.ctx.fillRect(rect.left, rect.top, rect.width, rect.height);
 
-        if (rect.rot) {
-          this.rotated(rect.center, rect.rot, draw);
-          return;
-        }
+      if (rect.rot) {
+        this.rotated(rect.center, rect.rot, draw);
+        return;
+      }
 
-        draw();
-      });
+      draw();
     },
     /**
      * @param {Rect} rect
@@ -102,11 +100,11 @@ export function canvas2D(canvas) {
     ellipse(rect) {
       this.ctx.beginPath();
       this.ctx.ellipse(
-        rect.left,
-        rect.top,
+        rect.centerX,
+        rect.centerY,
         rect.width,
         rect.height,
-        0,
+        rect.rot,
         Math.PI * 2,
         0
       );

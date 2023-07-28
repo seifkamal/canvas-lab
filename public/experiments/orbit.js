@@ -1,16 +1,18 @@
-import { Vec } from "../tools/geometry.js";
+import { Rect, Vec } from "../tools/geometry.js";
 import { Body } from "../tools/physics.js";
-import { cursor } from "../plugins/cursor.js";
+import { pointer } from "../plugins/pointer.js";
 import { animate } from "../plugins/animate.js";
 
 /**
  * @type {import('../index').Experiment}
  */
 export default function experiment({ canvas, param }) {
-  const center = new Vec(canvas.width / 2, canvas.height / 2);
-  const target = cursor(center);
   const body = new Body(new Vec(40));
+  const center = new Vec(canvas.width / 2, canvas.height / 2);
+  const target = pointer(center);
+  const targetBody = new Rect(new Vec(20), target);
 
+  const bounciness = 3;
   const strength = param("Force", {
     type: "number",
     min: "0",
@@ -20,16 +22,23 @@ export default function experiment({ canvas, param }) {
   });
 
   animate(() => {
-    const force = Vec.sub(target, body.center);
-    force.norm();
-    force.mul(Number(strength.value));
-    body.applyForce(force);
+    const orbit = Vec.sub(target, body.center);
+    orbit.norm();
+    orbit.mul(Number(strength.value));
+    body.applyForce(orbit);
+
+    if (body.touches(targetBody)) {
+      const bounce = Vec.sub(body.center, targetBody.center);
+      bounce.norm();
+      bounce.mul(bounciness);
+      body.applyForce(bounce);
+    }
 
     body.step();
 
     canvas.clear();
-    canvas.ctx.lineWidth = 0.4;
-    canvas.path(body.center, target);
+    canvas.path(body.center, targetBody.center);
     canvas.ellipse(body);
+    canvas.ellipse(targetBody);
   });
 }
