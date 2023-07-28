@@ -1,13 +1,16 @@
 /**
- * @typedef {{ delta: number; frame: number; }} StepInfo
- * @typedef {(info: StepInfo) => void} StepFunc
+ * @typedef {{
+ *   frame: number;
+ *   delta: number;
+ *   elapsed: number;
+ * }} StepInfo
  * @typedef {{
  *   end(): void;
  *   pause(): void;
  *   unpause(): void;
  * }} LoopControls
  *
- * @param {StepFunc} onStep
+ * @param {(info: StepInfo) => void} onStep
  * @returns {LoopControls}
  */
 export function animate(onStep) {
@@ -30,7 +33,7 @@ export function animate(onStep) {
     const delta = Math.min(now - prev, 1);
 
     if (!paused) {
-      onStep({ delta, frame: count });
+      onStep({ frame: count, delta, elapsed: now });
       count++;
     }
 
