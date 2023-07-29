@@ -11,7 +11,7 @@ class MagneticForce {
    * @returns
    */
   static force(body, anchor) {
-    const force = Vec.sub(anchor, body.pos);
+    const force = Vec.sub(anchor, body.center);
     force.y = 0;
     force.norm();
     force.mul(MagneticForce.C);
@@ -42,10 +42,10 @@ export default function experiment({ canvas, info }) {
       // Draw
       canvas.ellipse(node.value);
       if (node.left) {
-        canvas.path(node.value.pos, node.left.value.pos);
+        canvas.path(node.value.center, node.left.value.center);
       }
       if (node.right) {
-        canvas.path(node.value.pos, node.right.value.pos);
+        canvas.path(node.value.center, node.right.value.center);
       }
       // Step
       const force = MagneticForce.force(node.value, canvas.center);
