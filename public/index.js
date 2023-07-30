@@ -39,9 +39,6 @@ function getCanvas2D() {
     document.querySelector("canvas") ??
     document.body.appendChild(document.createElement("canvas"));
 
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
   return canvas2D(canvas);
 }
 

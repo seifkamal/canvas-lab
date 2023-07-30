@@ -11,6 +11,14 @@ export function canvas2D(canvas) {
     throw new Error("canvas 2d context unavailable");
   }
 
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  window.addEventListener("resize", () => {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+  });
+
   return {
     get ctx() {
       return ctx;
