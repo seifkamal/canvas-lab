@@ -20,9 +20,9 @@ class MagneticForce {
 }
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, info }) {
+export default function ({ canvas, info }) {
   info(
     `This is a ${info.link(
       "binary tree",

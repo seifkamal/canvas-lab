@@ -3,9 +3,9 @@ import { Body, Gravity } from "../tools/physics.js";
 import { animate } from "../plugins/animate.js";
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas }) {
+export default function ({ canvas }) {
   const body = new Body(new Vec(100));
   const center = new Vec(canvas.width / 2, canvas.height / 3);
   body.pos.x = center.x - body.halfWidth;

@@ -4,9 +4,9 @@ import { pointer } from "../plugins/pointer.js";
 import { animate } from "../plugins/animate.js";
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, param }) {
+export default function ({ canvas, param }) {
   const body = new Body(new Vec(40));
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const target = pointer(center);

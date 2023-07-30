@@ -29,9 +29,9 @@ class Walker {
 }
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas }) {
+export default function ({ canvas }) {
   const center = new Vec(canvas.width / 2, canvas.height / 2);
   const walker = new Walker(center);
 

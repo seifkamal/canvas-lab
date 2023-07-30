@@ -1,7 +1,7 @@
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ info }) {
+export default function ({ info }) {
   info(
     "Hey there. Click on me to get started.",
     `This is a lab site where ${info.link(

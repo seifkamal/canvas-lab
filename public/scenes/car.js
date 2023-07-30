@@ -48,9 +48,9 @@ class Car extends Body {
 }
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, param, info }) {
+export default function ({ canvas, param, info }) {
   info(
     "Use <kbd>wasd</kbd> keys to move",
     `Sprite source: ${info.link(

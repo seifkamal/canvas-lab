@@ -48,9 +48,9 @@ class Bounce {
 }
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, param }) {
+export default function ({ canvas, param }) {
   const size = new Vec(50);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const body = new Body(size, pos);

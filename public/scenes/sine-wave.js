@@ -2,9 +2,9 @@ import { animate } from "../plugins/animate.js";
 import { Rect, Vec } from "../tools/geometry.js";
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, param, info }) {
+export default function ({ canvas, param, info }) {
   info(
     `This is a ${info.link(
       "sine wave",

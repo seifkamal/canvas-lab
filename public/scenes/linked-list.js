@@ -4,9 +4,9 @@ import { LinkedList } from "../tools/struct.js";
 import { animate } from "../plugins/animate.js";
 
 /**
- * @type {import('../index').Experiment}
+ * @type {import('../index').Scene}
  */
-export default function experiment({ canvas, param, info }) {
+export default function ({ canvas, param, info }) {
   info(
     `This is a ${info.link(
       "linked list",

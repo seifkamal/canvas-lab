@@ -5,9 +5,9 @@ import { param } from "./core/param.js";
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(location.search);
   const id = params.get("id") || "intro";
-  const exp = await loadExperiment(id);
+  const scene = await loadScene(id);
 
-  exp({
+  scene({
     canvas: getCanvas2D(),
     param: getParamFunc(),
     info: getInfoFunc(),
@@ -19,16 +19,16 @@ document.addEventListener("DOMContentLoaded", async () => {
  * @typedef {ReturnType<getParamFunc>} ParamFunc
  * @typedef {ReturnType<getInfoFunc>} InfoFunc
  * @typedef {{ canvas: Canvas, param: ParamFunc, info: InfoFunc }} Context
- * @typedef {(context: Context) => void} Experiment
+ * @typedef {(context: Context) => void} Scene
  *
  * @param {string} id
- * @returns {Promise<Experiment>}
+ * @returns {Promise<Scene>}
  */
-async function loadExperiment(id) {
-  const expMod = await import(`./experiments/${id}.js`);
+async function loadScene(id) {
+  const expMod = await import(`./scenes/${id}.js`);
   const exp = expMod.default;
   if (!exp) {
-    throw new Error(`experiment ${id} not found`);
+    throw new Error(`scene ${id} not found`);
   }
 
   return exp;
