@@ -1,10 +1,5 @@
 import { Rect, Vec } from "../tools/geometry.js";
 
-const Chars = {
-  x: "✘",
-  o: "○",
-};
-
 /**
  * @param {HTMLCanvasElement} canvas
  * @returns A wrapper object around the given canvas
@@ -50,13 +45,6 @@ export function canvas2D(canvas) {
      */
     write(text, at) {
       this.ctx.fillText(text, at.x, at.y);
-    },
-    /**
-     * @param {Vec} point
-     * @param {'x' | 'o'} type
-     */
-    mark(point, type = "x") {
-      this.write(Chars[type], point);
     },
     /**
      * @param {Vec} point
