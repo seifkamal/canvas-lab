@@ -14,15 +14,16 @@ export default function experiment({ canvas, param, info }) {
     that can be added onto itself and still retain its form.`
   );
 
-  const xSpace = 1400;
-  const count = xSpace / 22;
-  const size = count * 2;
-  const yOffset = canvas.centerY - count;
+  const length = 1400;
+  const freq = length / 22;
+  const radius = freq * 2;
+  const xOffset = canvas.centerX - length / 2;
+  const yOffset = canvas.centerY - radius / 2;
 
   /** @type {Rect[]} */
   const rects = [];
-  for (let x = 0; x < xSpace; x += count) {
-    rects.push(new Rect(new Vec(size), new Vec(x)));
+  for (let x = 0; x < length; x += freq) {
+    rects.push(new Rect(new Vec(radius), new Vec(xOffset + x)));
   }
 
   let amp = 50;
