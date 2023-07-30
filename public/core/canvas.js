@@ -20,6 +20,9 @@ export function canvas2D(canvas) {
   });
 
   return {
+    get el() {
+      return canvas;
+    },
     get ctx() {
       return ctx;
     },

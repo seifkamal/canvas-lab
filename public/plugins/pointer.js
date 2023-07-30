@@ -1,21 +1,28 @@
 import { Vec } from "../tools/geometry.js";
 
 /**
- * @param {Vec} anchor The default position if the pointer leaves.
- * @returns {Vec} The pointer location.
+ * @param {HTMLElement} target
+ * @typedef {{ pressed: boolean; pos: Vec; }} PointerState
+ * @returns {PointerState}
  */
-export function pointer(anchor = new Vec()) {
-  const pos = anchor;
+export function pointer(target = document.body) {
+  const state = {
+    pressed: false,
+    pos: new Vec(),
+  };
 
-  window.addEventListener("pointermove", ({ clientX, clientY }) => {
-    pos.x = clientX;
-    pos.y = clientY;
+  target.addEventListener("pointerdown", () => {
+    state.pressed = true;
   });
 
-  window.addEventListener("pointerout", () => {
-    pos.x = anchor.x;
-    pos.y = anchor.y;
+  target.addEventListener("pointerup", () => {
+    state.pressed = false;
   });
 
-  return pos;
+  target.addEventListener("pointermove", ({ clientX, clientY }) => {
+    state.pos.x = clientX;
+    state.pos.y = clientY;
+  });
+
+  return state;
 }

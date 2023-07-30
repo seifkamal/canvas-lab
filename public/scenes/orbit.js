@@ -6,39 +6,37 @@ import { animate } from "../plugins/animate.js";
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, param }) {
-  const body = new Body(new Vec(40));
-  const center = new Vec(canvas.width / 2, canvas.height / 2);
-  const target = pointer(center);
-  const targetBody = new Rect(new Vec(20), target);
+export default function ({ canvas, info }) {
+  info("Click anywhere to move the target.");
 
-  const bounciness = 3;
-  const strength = param("Force", {
-    type: "number",
-    min: "0",
-    max: "0.5",
-    step: "0.1",
-    value: "0.1",
-  });
+  const ptr = pointer(canvas.el);
+  const target = new Rect(new Vec(20));
+  target.pos = Vec.sub(canvas.center, target.halfSize);
+  const body = new Body(new Vec(40), Vec.mul(target.pos, 0.5));
+  body.applyForce(new Vec(2.5, 5));
 
   animate(() => {
-    const orbit = Vec.sub(target, body.center);
+    if (ptr.pressed) {
+      target.pos = Vec.sub(ptr.pos, target.halfSize);
+    }
+
+    const orbit = Vec.sub(target.pos, body.center);
     orbit.norm();
-    orbit.mul(Number(strength.value));
+    orbit.mul(0.1);
     body.applyForce(orbit);
 
-    if (body.touches(targetBody)) {
-      const bounce = Vec.sub(body.center, targetBody.center);
+    if (body.touches(target)) {
+      const bounce = Vec.sub(body.center, target.center);
       bounce.norm();
-      bounce.mul(bounciness);
+      bounce.mul(3);
       body.applyForce(bounce);
     }
 
     body.step();
 
     canvas.clear();
-    canvas.path(body.center, targetBody.center);
+    canvas.path(body.center, target.center);
     canvas.ellipse(body);
-    canvas.ellipse(targetBody);
+    canvas.ellipse(target);
   });
 }
