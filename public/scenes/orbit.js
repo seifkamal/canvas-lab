@@ -1,23 +1,25 @@
-import { Rect, Vec } from "../tools/geometry.js";
-import { Body } from "../tools/physics.js";
-import { pointer } from "../plugins/pointer.js";
-import { animate } from "../plugins/animate.js";
+import { Rect, Vec } from "../modules/geometry.js";
+import { Body } from "../modules/physics.js";
+import { animate } from "../modules/animate.js";
 
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, info }) {
-  info("Click anywhere to move the target.");
+export default function ({ canvas, input }) {
+  const pointer = input.pointer({
+    target: canvas.el,
+    press: true,
+    move: true,
+  });
 
-  const ptr = pointer(canvas.el);
   const target = new Rect(new Vec(20));
   target.pos = Vec.sub(canvas.center, target.halfSize);
   const body = new Body(new Vec(40), Vec.mul(target.pos, 0.5));
   body.applyForce(new Vec(2.5, 5));
 
   animate(() => {
-    if (ptr.pressed) {
-      target.pos = Vec.sub(ptr.pos, target.halfSize);
+    if (pointer.pressed) {
+      target.pos = Vec.sub(pointer.pos, target.halfSize);
     }
 
     const orbit = Vec.sub(target.pos, body.center);

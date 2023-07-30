@@ -1,17 +1,23 @@
-import { Vec } from "../tools/geometry.js";
-import { Sprite } from "../tools/sprite.js";
-import { Body, Friction } from "../tools/physics.js";
-import { keys } from "../plugins/keys.js";
-import { animate } from "../plugins/animate.js";
+import { Vec } from "../modules/geometry.js";
+import { Body, Friction } from "../modules/physics.js";
+import { animate } from "../modules/animate.js";
+
+/**
+ * @param {string} src
+ */
+function sprite(src) {
+  const img = document.createElement("img");
+  img.src = src;
+  return img;
+}
 
 class Car extends Body {
   mass = 10;
   power = 20;
-  image = new Sprite("assets/car.png");
+  image = sprite("assets/car.png");
   /**
    * @param {Set} controls
    * @param {number} delta
-   * @returns {number} speed
    */
   drive(controls, delta) {
     const dir = Vec.zero;
@@ -19,12 +25,11 @@ class Car extends Body {
     if (controls.has("down")) dir.add(Vec.down);
     if (controls.has("left")) dir.add(Vec.left);
     if (controls.has("right")) dir.add(Vec.right);
-    return this.move(dir, delta);
+    this.move(dir, delta);
   }
   /**
    * @param {Vec} dir
    * @param {number} delta
-   * @returns {number} speed
    */
   move(dir, delta) {
     const force = Vec.mul(dir, this.power);
@@ -39,18 +44,13 @@ class Car extends Body {
     if (this.vel.mag > 0.01) {
       this.rot = this.vel.head;
     }
-
-    return this.speed;
-  }
-  get speed() {
-    return Math.round(this.vel.mag * 10);
   }
 }
 
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, param, info }) {
+export default function ({ canvas, info, input }) {
   info(
     "Use <kbd>wasd</kbd> keys to move",
     `Sprite source: ${info.link(
@@ -63,22 +63,19 @@ export default function ({ canvas, param, info }) {
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const car = new Car(size, pos);
 
-  const speed = param("Speed", {
-    type: "number",
-    min: "0",
-    max: "100",
-    disabled: true,
-  });
-
-  const controls = keys({
+  const controls = input.keys({
     w: "up",
+    ArrowUp: "up",
     s: "down",
+    ArrowDown: "down",
     a: "left",
+    ArrowLeft: "left",
     d: "right",
+    ArrowRight: "right",
   });
 
   animate(({ delta }) => {
-    speed.value = car.drive(controls, delta);
+    car.drive(controls, delta);
 
     canvas.clear();
     canvas.image(car);

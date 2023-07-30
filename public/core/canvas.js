@@ -1,11 +1,11 @@
-import { Rect, Vec } from "../tools/geometry.js";
+import { Rect, Vec } from "../modules/geometry.js";
 
 /**
  * @param {HTMLCanvasElement} canvas
  * @returns A wrapper object around the given canvas
  * that exposes convenience functions for 2D operations.
  */
-export function canvas2D(canvas) {
+export function canvas(canvas) {
   const ctx = canvas.getContext("2d");
   if (!ctx) {
     throw new Error("canvas 2d context unavailable");

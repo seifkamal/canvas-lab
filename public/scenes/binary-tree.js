@@ -1,7 +1,7 @@
-import { animate } from "../plugins/animate.js";
-import { Vec } from "../tools/geometry.js";
-import { Body } from "../tools/physics.js";
-import { BinaryTree } from "../tools/struct.js";
+import { Vec } from "../modules/geometry.js";
+import { Body } from "../modules/physics.js";
+import { BinaryTree } from "../modules/struct.js";
+import { animate } from "../modules/animate.js";
 
 class MagneticForce {
   static C = 0.001;

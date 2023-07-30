@@ -1,12 +1,12 @@
-import { Vec } from "../tools/geometry.js";
-import { Body } from "../tools/physics.js";
-import { LinkedList } from "../tools/struct.js";
-import { animate } from "../plugins/animate.js";
+import { Vec } from "../modules/geometry.js";
+import { Body } from "../modules/physics.js";
+import { LinkedList } from "../modules/struct.js";
+import { animate } from "../modules/animate.js";
 
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, param, info }) {
+export default function ({ canvas, info }) {
   info(
     `This is a ${info.link(
       "linked list",
@@ -17,13 +17,7 @@ export default function ({ canvas, param, info }) {
 
   const list = makeCircleList(canvas);
   const force = new Vec(0, 0.005);
-  const dissipation = param("Dissipation", {
-    type: "number",
-    min: "0",
-    max: "1",
-    step: "0.1",
-    value: "0.2",
-  });
+  const dissipation = 0.8;
 
   animate(() => {
     canvas.clear();
@@ -34,8 +28,7 @@ export default function ({ canvas, param, info }) {
       canvas.ellipse(item.value);
 
       if (item.next) {
-        const C = 1 - Number(dissipation.value);
-        const force = Vec.mul(item.value.acc, C);
+        const force = Vec.mul(item.value.acc, dissipation);
         item.next?.value.applyForce(force);
       }
 

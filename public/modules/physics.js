@@ -1,5 +1,22 @@
 import { Vec, Rect } from "./geometry.js";
 
+export class Body extends Rect {
+  mass = 1;
+  vel = new Vec();
+  acc = new Vec();
+  /**
+   * @param {Vec} force
+   */
+  applyForce(force) {
+    this.acc.add(Vec.div(force, this.mass));
+  }
+  step() {
+    this.vel.add(this.acc);
+    this.pos.add(this.vel);
+    this.acc.mul(0);
+  }
+}
+
 export class Gravity {
   static C = 0.1;
   /**
@@ -30,22 +47,5 @@ export class Friction {
     const normal = (body.mass * Gravity.C) / Friction.C;
     force.mul(normal);
     return force;
-  }
-}
-
-export class Body extends Rect {
-  mass = 1;
-  vel = new Vec();
-  acc = new Vec();
-  /**
-   * @param {Vec} force
-   */
-  applyForce(force) {
-    this.acc.add(Vec.div(force, this.mass));
-  }
-  step() {
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-    this.acc.mul(0);
   }
 }

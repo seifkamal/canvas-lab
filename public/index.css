@@ -11,6 +11,7 @@
   :root {
     height: 100%;
     line-height: 1.5;
+    overflow: hidden;
   }
 
   body {
@@ -68,7 +69,9 @@ header {
 .hud {
   padding: 0.5rem;
   color: var(--c-bg);
-  background-color: color-mix(in srgb, transparent, var(--c-fg) 80%);
+  /* Fallback for browsers that don't support `color-mix`. */
+  background-color: var(--c-fg);
+  background-color: color-mix(in srgb, transparent, var(--c-fg) 90%);
   box-shadow: var(--sh);
   border-radius: 4px;
 }
@@ -117,14 +120,22 @@ details[open] > summary:not(:only-child)::before {
   rotate: 180deg;
 }
 
-menu {
+#controls {
   grid-column: 3;
   height: fit-content;
   width: fit-content;
   justify-self: end;
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
+}
+
+#controls:empty {
+  display: none;
+}
+
+#controls > li {
+  line-height: 0;
+  cursor: help;
 }
 
 nav {
@@ -159,24 +170,6 @@ nav ul {
 nav:has(button[aria-pressed]) ul {
   opacity: 1;
   visibility: visible;
-}
-
-input {
-  border: var(--br);
-  border-radius: 4px;
-  padding: 0 0.25rem;
-  background-color: color-mix(in srgb, transparent, var(--c-bg) 90%);
-}
-
-/* The menu module uses disabled inputs as labels. */
-input[disabled] {
-  all: unset;
-}
-
-label {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 a[target="_blank"] {

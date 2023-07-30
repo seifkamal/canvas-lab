@@ -1,10 +1,10 @@
-import { animate } from "../plugins/animate.js";
-import { Rect, Vec } from "../tools/geometry.js";
+import { Rect, Vec } from "../modules/geometry.js";
+import { animate } from "../modules/animate.js";
 
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, param, info }) {
+export default function ({ canvas, info, input }) {
   info(
     `This is a ${info.link(
       "sine wave",
@@ -27,22 +27,15 @@ export default function ({ canvas, param, info }) {
   }
 
   let amp = 50;
-  const ampParam = param("Amplitude", {
-    type: "number",
-    min: "50",
-    max: "200",
-    step: "50",
-    value: String(amp),
+  const pointer = input.pointer({
+    target: canvas.el,
+    scroll: true,
   });
 
   animate(({ elapsed }) => {
     canvas.clear();
 
-    // Lerp amplitude to match user param value.
-    const ampParamVal = Number(ampParam.value);
-    if (amp !== ampParamVal) {
-      amp += ampParamVal - amp < 0 ? -1 : 1;
-    }
+    amp = Math.max(Math.min(amp + pointer.scroll.y, 200), 50);
 
     for (const rect of rects) {
       const y = yOffset + amp * Math.sin(rect.pos.x + elapsed);

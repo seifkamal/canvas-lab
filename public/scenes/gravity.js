@@ -1,6 +1,6 @@
-import { Vec, Rect } from "../tools/geometry.js";
-import { Body, Gravity } from "../tools/physics.js";
-import { animate } from "../plugins/animate.js";
+import { Vec, Rect } from "../modules/geometry.js";
+import { Body, Gravity } from "../modules/physics.js";
+import { animate } from "../modules/animate.js";
 
 /**
  * @type {import('../index').Scene}

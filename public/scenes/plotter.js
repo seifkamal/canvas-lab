@@ -1,5 +1,5 @@
-import { animate } from "../plugins/animate.js";
-import { Vec } from "../tools/geometry.js";
+import { Vec } from "../modules/geometry.js";
+import { animate } from "../modules/animate.js";
 
 class Walker {
   dir = new Vec(1);

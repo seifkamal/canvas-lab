@@ -1,6 +1,6 @@
-import { Vec } from "../tools/geometry.js";
-import { Body, Gravity } from "../tools/physics.js";
-import { animate } from "../plugins/animate.js";
+import { Vec } from "../modules/geometry.js";
+import { Body, Gravity } from "../modules/physics.js";
+import { animate } from "../modules/animate.js";
 
 class Wind {
   static C = 40;
@@ -50,25 +50,13 @@ class Bounce {
 /**
  * @type {import('../index').Scene}
  */
-export default function ({ canvas, param }) {
+export default function ({ canvas }) {
   const size = new Vec(50);
   const pos = Vec.sub(canvas.center, Vec.div(size, 2));
   const body = new Body(size, pos);
+  body.mass = 40;
 
-  const mass = param("Mass", {
-    type: "number",
-    min: "40",
-    max: "50",
-    step: "1",
-    value: "40",
-  });
-  const strength = param("Wind", {
-    type: "number",
-    min: "0",
-    max: "10",
-    step: "1",
-    value: "5",
-  });
+  const wind = Wind.force(body, 5);
   const bounds = {
     left: 0,
     top: 0,
@@ -77,13 +65,6 @@ export default function ({ canvas, param }) {
   };
 
   animate(() => {
-    const m = Number(mass.value);
-    if (m !== body.mass) {
-      body.mass = m;
-      body.size = new Vec(m * 2.5);
-    }
-
-    const wind = Wind.force(body, Number(strength.value));
     body.applyForce(wind);
     const gravity = Gravity.force(body);
     body.applyForce(gravity);

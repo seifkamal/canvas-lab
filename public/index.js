@@ -1,6 +1,6 @@
-import { canvas2D } from "./core/canvas.js";
+import { canvas } from "./core/canvas.js";
+import { input } from "./core/input.js";
 import { info } from "./core/info.js";
-import { param } from "./core/param.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(location.search);
@@ -8,17 +8,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const scene = await loadScene(id);
 
   scene({
-    canvas: getCanvas2D(),
-    param: getParamFunc(),
+    canvas: getCanvas(),
     info: getInfoFunc(),
+    input: getInputFuncs(),
   });
 });
 
 /**
- * @typedef {ReturnType<getCanvas2D>} Canvas
- * @typedef {ReturnType<getParamFunc>} ParamFunc
- * @typedef {ReturnType<getInfoFunc>} InfoFunc
- * @typedef {{ canvas: Canvas, param: ParamFunc, info: InfoFunc }} Context
+ * @typedef {ReturnType<typeof getCanvas>} Canvas
+ * @typedef {ReturnType<typeof getInfoFunc>} InfoFunc
+ * @typedef {ReturnType<typeof getInputFuncs>} InputFuncs
+ * @typedef {{ canvas: Canvas, info: InfoFunc, input: InputFuncs }} Context
  * @typedef {(context: Context) => void} Scene
  *
  * @param {string} id
@@ -34,26 +34,29 @@ async function loadScene(id) {
   return exp;
 }
 
-function getCanvas2D() {
-  const canvas =
-    document.querySelector("canvas") ??
-    document.body.appendChild(document.createElement("canvas"));
+function getCanvas() {
+  const root = document.querySelector("canvas");
+  if (!root) {
+    throw new Error("canvas element not found");
+  }
 
-  return canvas2D(canvas);
-}
-
-function getParamFunc() {
-  const root =
-    document.querySelector("menu") ||
-    document.body.appendChild(document.createElement("menu"));
-
-  return param(root);
+  return canvas(root);
 }
 
 function getInfoFunc() {
-  const root =
-    document.querySelector("details") ||
-    document.body.appendChild(document.createElement("details"));
+  const root = document.querySelector("details");
+  if (!root) {
+    throw new Error("details element not found");
+  }
 
   return info(root);
+}
+
+function getInputFuncs() {
+  const root = document.getElementById("controls");
+  if (!root) {
+    throw new Error("#controls element not found");
+  }
+
+  return input(root);
 }
