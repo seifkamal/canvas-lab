@@ -14,7 +14,7 @@ const inputs = {
     tooltip: "Control using pointer press",
   },
   "pointer-scroll": {
-    iconSrc: "/assets/pointer-press.svg",
+    iconSrc: "/assets/pointer-scroll.svg",
     tooltip: "Control using pointer wheel",
   },
 };

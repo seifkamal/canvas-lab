@@ -158,6 +158,10 @@ export class Rect {
   get center() {
     return new Vec(this.centerX, this.centerY);
   }
+  set center(pos) {
+    this.pos.x = pos.x - this.halfWidth;
+    this.pos.y = pos.y - this.halfHeight;
+  }
   /**
    * @param {Rect} other
    * @returns {boolean}
