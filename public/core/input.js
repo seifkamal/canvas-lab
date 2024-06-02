@@ -120,19 +120,23 @@ function pointer(config) {
   let scroll = new Vec();
 
   if (config.press) {
-    target.addEventListener("pointerdown", () => {
+    target.addEventListener("pointerdown", ({ x, y }) => {
       pressed = true;
+      pos.x = x;
+      pos.y = y;
     });
 
-    target.addEventListener("pointerup", () => {
+    target.addEventListener("pointerup", ({ x, y }) => {
       pressed = false;
+      pos.x = x;
+      pos.y = y;
     });
   }
 
   if (config.move) {
-    target.addEventListener("pointermove", ({ clientX, clientY }) => {
-      pos.x = clientX;
-      pos.y = clientY;
+    target.addEventListener("pointermove", ({ x, y }) => {
+      pos.x = x;
+      pos.y = y;
     });
   }
 

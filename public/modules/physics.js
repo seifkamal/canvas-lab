@@ -17,6 +17,53 @@ export class Body extends Rect {
   }
 }
 
+export class Spring extends Body {
+  stiffness = 210;
+  friction = 13.5;
+  threshold = 0.4;
+  /** @type {Vec} */
+  targetPosition;
+  done = false;
+  /**
+   * @param {number} delta
+   */
+  step(delta = 1 / 30) {
+    if (!this.targetPosition || this.done) {
+      return;
+    }
+
+    this.done = [
+      this.distance.x,
+      this.distance.y,
+      this.acc.x,
+      this.acc.y,
+      this.vel.x,
+      this.vel.y,
+    ].every((value) => Math.abs(value) < this.threshold);
+
+    if (this.done) {
+      return;
+    }
+
+    this.acc = Vec.sub(
+      Vec.mul(this.distance, this.stiffness),
+      Vec.mul(this.vel, this.friction),
+    );
+    this.vel.add(Vec.mul(this.acc, delta));
+    this.pos.add(Vec.mul(this.vel, delta));
+  }
+  get distance() {
+    return Vec.sub(this.targetPosition, this.pos);
+  }
+  /**
+   * @param {Vec} targetPosition
+   */
+  moveTo(targetPosition) {
+    this.done = false;
+    this.targetPosition = Vec.sub(targetPosition, this.halfSize);
+  }
+}
+
 export class Gravity {
   static C = 0.1;
   /**

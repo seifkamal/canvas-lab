@@ -64,6 +64,12 @@ header {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   gap: 1rem;
+
+  /* Pass pointer events through to children */
+  pointer-events: none;
+  & > * {
+    pointer-events: auto;
+  }
 }
 
 .hud {
